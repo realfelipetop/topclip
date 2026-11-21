@@ -10,6 +10,7 @@
   <link rel="preload" href="/fontes/ArchivoNarrow[wght].ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="/fontes/ArchivoBlack-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="/static/estilo.css">
+  <script src="/static/tema.js"></script>
 </head>
 <body>
   <header class="topo">
@@ -29,6 +30,11 @@
       <a href="#/biblioteca" data-nav="biblioteca">Biblioteca</a>
       <a href="#/instalacao" data-nav="instalacao">Instalação</a>
     </nav>
+    <button type="button" class="tema" id="tema" aria-pressed="false" aria-label="Ativar o modo noturno" title="Modo noturno">
+      <svg class="lua" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg>
+      <svg class="sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+      <span>noturno</span>
+    </button>
     <a class="insta" href="https://www.instagram.com/realfelipetop/" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
       <span>@realfelipetop</span>
