@@ -2553,4 +2553,38 @@ async function mostrarSaude(forcar) {
   document.getElementById("reverificar").onclick = () => mostrarSaude(true);
 }
 
+// ------------------------------------------------------------------ modo noturno
+// O tema inicial (sem piscar) é aplicado por tema.js, no <head>. Aqui fica o botão do topo.
+const TEMA_CHAVE = "topclip-tema";
+const LUA = `<svg class="lua" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg>`;
+const SOL = `<svg class="sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>`;
+
+function iniciarBotaoTema() {
+  const raiz = document.documentElement;
+  const botao = document.createElement("button");
+  botao.type = "button";
+  botao.className = "tema";
+  botao.id = "tema";
+  botao.innerHTML = `${LUA}${SOL}<span></span>`;
+  const atualizar = () => {
+    const escuro = raiz.getAttribute("data-tema") === "escuro";
+    botao.setAttribute("aria-pressed", String(escuro));
+    botao.setAttribute("aria-label", escuro ? "Voltar ao modo claro" : "Ativar o modo noturno");
+    botao.title = escuro ? "Modo claro" : "Modo noturno";
+    botao.querySelector("span").textContent = escuro ? "claro" : "noturno";
+  };
+  botao.addEventListener("click", () => {
+    const novo = raiz.getAttribute("data-tema") === "escuro" ? "claro" : "escuro";
+    try { localStorage.setItem(TEMA_CHAVE, novo); } catch (e) { /* sem armazenamento: vale só nesta aba */ }
+    window.aplicarTema(novo);
+    atualizar();
+  });
+  const insta = document.querySelector(".topo .insta");
+  if (insta) insta.before(botao); else document.querySelector(".topo")?.append(botao);
+  atualizar();
+  // o sistema mudou e a pessoa nunca escolheu: tema.js reaplica, o rótulo acompanha
+  window.matchMedia?.("(prefers-color-scheme: dark)").addEventListener?.("change", atualizar);
+}
+iniciarBotaoTema();
+
 rotear();

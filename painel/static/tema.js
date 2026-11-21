@@ -1,4 +1,5 @@
-/* TopClip — modo noturno. Carrega no <head> (antes de pintar), para não piscar claro.
+/* TopClip — modo noturno, parte que precisa rodar antes de pintar (no <head>), para a
+   página não piscar clara. O botão do topo e o clique ficam em app.js.
    Escolha salva no navegador; sem escolha, segue o tema do sistema. */
 (function () {
   "use strict";
@@ -14,29 +15,10 @@
     else raiz.removeAttribute("data-tema");
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", tema === "escuro" ? "#1c1b1e" : "#f4f0e8");
-    var botao = document.getElementById("tema");
-    if (botao) {
-      var escuro = tema === "escuro";
-      botao.setAttribute("aria-pressed", escuro ? "true" : "false");
-      botao.setAttribute("aria-label", escuro ? "Voltar ao modo claro" : "Ativar o modo noturno");
-      botao.setAttribute("title", escuro ? "Modo claro" : "Modo noturno");
-      var rotulo = botao.querySelector("span");
-      if (rotulo) rotulo.textContent = escuro ? "claro" : "noturno";
-    }
   }
 
+  window.aplicarTema = aplicar;   // app.js chama quando a pessoa clica no botão
   aplicar(atual());
-
-  document.addEventListener("DOMContentLoaded", function () {
-    aplicar(atual());
-    var botao = document.getElementById("tema");
-    if (!botao) return;
-    botao.addEventListener("click", function () {
-      var novo = raiz.getAttribute("data-tema") === "escuro" ? "claro" : "escuro";
-      try { localStorage.setItem(CHAVE, novo); } catch (e) { /* sem armazenamento: vale só nesta aba */ }
-      aplicar(novo);
-    });
-  });
 
   // sem escolha da pessoa, acompanha o sistema
   if (sistema && sistema.addEventListener) {
